@@ -55,7 +55,8 @@ topic "DB Update"
 if [ -z ${MIGRATION_PROJECT_FILE:-} ]; then
 	MIGRATION_PROJECT_FILE=$(x=$(dirname $(find ${BUILD_DIR} -maxdepth 5 -iname Programme.cs | head -1)); while [[ "$x" =~ $BUILD_DIR ]] ; do find "$x" -maxdepth 1 -o -name *.csproj; x=`dirname "$x"`; done)
 fi
-cd GustyCore.FluentMigrator/
+export MIGRATION_PATH= $(realpath $MIGRATION_PROJECT_FILE)
+cd ${MIGRATION_PATH}/GustyCore.FluentMigrator/
 dotnet run --project $MIGRATION_PROJECT_FILE
 
 
