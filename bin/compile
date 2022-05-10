@@ -57,9 +57,10 @@ echo "CACHE_DIR: "
 echo $CACHE_DIR
 echo "ENV_DIR: " 
 echo $ENV_DIR
-echo ls 
 
-cd ../GustyCore.FM
+
+cd $BUILD_DIR
+cd GustyCore.FM
 dotnet run 
 cd ..
 
