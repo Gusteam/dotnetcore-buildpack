@@ -83,7 +83,11 @@ fi
 export NUGET_PACKAGES="${CACHE_DIR}/nuget/cache"
 topic "DB Update"
 
-dotnet run --project GustyCore.FM/GustyCore.FluentMigrator.csproj
+echo "DATABASE_URL"
+echo $DATABASE_URL
+cd GustyCore.FM
+dotnet run 
+cd ..
 
 
 info "publish ${PROJECT_FILE} for ${BUILD_CONFIGURATION} on ${OUTPUT_DIR}"
