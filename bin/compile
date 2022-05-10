@@ -51,18 +51,12 @@ install_dotnet $BUILD_DIR $CACHE_DIR $DOTNET_SDK_VERSION $DOTNET_RUNTIME_VERSION
 
 info ""
 topic "DB Update"
-echo "BUILD_DIR: " 
-echo $BUILD_DIR
-echo "CACHE_DIR: " 
-echo $CACHE_DIR
-echo "ENV_DIR: " 
-echo $ENV_DIR
 
+if [ -z ${MIGRATION_PROJECT_FILE:-} ]; then
+	MIGRATION_PROJECT_FILE=$(x=$(dirname $(find ${BUILD_DIR} -maxdepth 5 -iname Programme.cs | head -1)); while [[ "$x" =~ $BUILD_DIR ]] ; do find "$x" -maxdepth 1 -o -name *.csproj; x=`dirname "$x"`; done)
+fi
 
-cd $BUILD_DIR
-cd GustyCore.FM
-dotnet run 
-cd ..
+dotnet run --project $MIGRATION_PROJECT_FILE
 
 
 export PATH="${BUILD_DIR}/.scalingo/dotnet:${PATH}"
