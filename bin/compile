@@ -59,12 +59,13 @@ export MIGRATION_PATH= $(realpath $MIGRATION_PROJECT_FILE)
 cd ${MIGRATION_PATH}/GustyCore.FluentMigrator/
 dotnet run --project $MIGRATION_PROJECT_FILE
 
+cd $BUILD_DIR
+
+
 
 export PATH="${BUILD_DIR}/.scalingo/dotnet:${PATH}"
 
 dotnet new tool-manifest
-
-cd $BUILD_DIR
 
 if [ -f ${BUILD_DIR}/dotnet-tools.json ] || [ -f ${BUILD_DIR}/.config/dotnet-tools.json ]; then
 	dotnet tool restore
