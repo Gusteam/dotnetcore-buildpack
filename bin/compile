@@ -49,20 +49,6 @@ volta install node@$NODEJS_VERSION
 info "Installing dotnet"
 install_dotnet $BUILD_DIR $CACHE_DIR $DOTNET_SDK_VERSION $DOTNET_RUNTIME_VERSION
 
-info ""
-topic "DB Update"
-
-if [ -z ${MIGRATION_PROJECT_FILE:-} ]; then
-	MIGRATION_PROJECT_FILE=$(x=$(dirname $(find ${BUILD_DIR} -maxdepth 5 -iname Programme.cs | head -1)); while [[ "$x" =~ $BUILD_DIR ]] ; do find "$x" -maxdepth 1 -o -name *.csproj; x=`dirname "$x"`; done)
-fi
-export MIGRATION_PATH= $(realpath $MIGRATION_PROJECT_FILE)
-cd ${MIGRATION_PATH}/GustyCore.FluentMigrator/
-dotnet run --project $MIGRATION_PROJECT_FILE
-
-cd $BUILD_DIR
-
-
-
 export PATH="${BUILD_DIR}/.scalingo/dotnet:${PATH}"
 
 dotnet new tool-manifest
@@ -109,3 +95,13 @@ if [ -n ${SCALINGOISH:-""} ]; then
 	echo "Override Procfile for scalingoish" | indent
 	echo "web: \$HOME/scalingo_output/${PROJECT_NAME}" > ${BUILD_DIR}/Procfile
 fi
+
+
+topic "DB Update"
+if [ -z ${MIGRATION_PROJECT_FILE:-} ]; then
+	MIGRATION_PROJECT_FILE=$(x=$(dirname $(find ${BUILD_DIR} -maxdepth 5 -iname Programme.cs | head -1)); while [[ "$x" =~ $BUILD_DIR ]] ; do find "$x" -maxdepth 1 -o -name *.csproj; x=`dirname "$x"`; done)
+fi
+export MIGRATION_PATH= $(realpath $MIGRATION_PROJECT_FILE)
+cd ${MIGRATION_PATH}/GustyCore.FluentMigrator/
+dotnet run --project $MIGRATION_PROJECT_FILE
+
