@@ -48,7 +48,21 @@ volta install node@$NODEJS_VERSION
 
 info "Installing dotnet"
 install_dotnet $BUILD_DIR $CACHE_DIR $DOTNET_SDK_VERSION $DOTNET_RUNTIME_VERSION
-info "Installing Entity Framework"
+
+info ""
+topic "DB Update"
+echo "BUILD_DIR: " 
+echo $BUILD_DIR
+echo "CACHE_DIR: " 
+echo $CACHE_DIR
+echo "ENV_DIR: " 
+echo $ENV_DIR
+echo ls 
+
+cd ../GustyCore.FM
+dotnet run 
+cd ..
+
 
 export PATH="${BUILD_DIR}/.scalingo/dotnet:${PATH}"
 
@@ -80,12 +94,6 @@ if [ -n "$(cat $PROJECT_FILE | grep 'netcoreapp2.0')" ]; then
 	info "More info https://github.com/edouard-mangel/dotnetcore-buildpack/issues/44" | indent
 fi
 export NUGET_PACKAGES="${CACHE_DIR}/nuget/cache"
-topic "DB Update"
-
-cd ../GustyCore.FM
-dotnet run 
-cd ..
-
 
 info "publish ${PROJECT_FILE} for ${BUILD_CONFIGURATION} on ${OUTPUT_DIR}"
 dotnet publish $PROJECT_FILE --output ${BUILD_DIR}/${OUTPUT_DIR} --configuration ${BUILD_CONFIGURATION} --runtime linux-x64
