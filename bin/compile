@@ -99,9 +99,10 @@ fi
 
 topic "DB Update"
 if [ -z ${MIGRATION_PROJECT_FILE:-} ]; then
-	MIGRATION_PROJECT_FILE=$(x=$(dirname $(find ${BUILD_DIR} -maxdepth 5 -iname Programme.cs | head -1)); while [[ "$x" =~ $BUILD_DIR ]] ; do find "$x" -maxdepth 1 -o -name *.csproj; x=`dirname "$x"`; done)
+	MIGRATION_PROJECT_FILE=$(find ${BUILD_DIR} -maxdepth 5 -iname "GustyCore.FM.csproj" | head -1); 
 fi
 
-cd $(realpath $MIGRATION_PROJECT_FILE)/GustyCore.FluentMigrator/
-dotnet run --project $MIGRATION_PROJECT_FILE
+cd "$(dirname "$MIGRATION_PROJECT_FILE")"
+dotnet run --project "${MIGRATION_PROJECT_FILE}"
+
 	
