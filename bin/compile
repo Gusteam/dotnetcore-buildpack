@@ -76,6 +76,7 @@ if [ -n "$(cat $PROJECT_FILE | grep 'netcoreapp2.0')" ]; then
 	info "For netcoreapp2.0 use https://github.com/edouard-mangel/dotnetcore-buildpack#v2.1.200" | indent
 	info "More info https://github.com/edouard-mangel/dotnetcore-buildpack/issues/44" | indent
 fi
+
 export NUGET_PACKAGES="${CACHE_DIR}/nuget/cache"
 
 info "publish ${PROJECT_FILE} for ${BUILD_CONFIGURATION} on ${OUTPUT_DIR}"
@@ -103,6 +104,7 @@ if [ -z ${MIGRATION_PROJECT_FILE:-} ]; then
 fi
 
 cd "$(dirname "$MIGRATION_PROJECT_FILE")"
+dotnet build -warnaserror
 dotnet run --project "${MIGRATION_PROJECT_FILE}"
 
 	
