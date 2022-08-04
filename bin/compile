@@ -80,7 +80,7 @@ fi
 export NUGET_PACKAGES="${CACHE_DIR}/nuget/cache"
 
 info "publish ${PROJECT_FILE} for ${BUILD_CONFIGURATION} on ${OUTPUT_DIR}"
-dotnet publish $PROJECT_FILE --output ${BUILD_DIR}/${OUTPUT_DIR} --configuration ${BUILD_CONFIGURATION} --runtime linux-x64 --self-contained -v d -p:PublishTrimmed=true
+dotnet publish $PROJECT_FILE --output ${BUILD_DIR}/${OUTPUT_DIR} --configuration ${BUILD_CONFIGURATION} --runtime linux-x64 --self-contained -p:PublishTrimmed=true
 
 if [ -f ${BUILD_DIR}/Procfile ]; then
 	topic "WARNING"
@@ -98,7 +98,7 @@ if [ -n ${SCALINGOISH:-""} ]; then
 fi
 
 
-topic "DB Update"
+topic "DB Update starting"
 if [ -z ${MIGRATION_PROJECT_FILE:-} ]; then
 	MIGRATION_PROJECT_FILE=$(find ${BUILD_DIR} -maxdepth 5 -iname "GustyCore.FM.csproj" | head -1); 
 fi
@@ -108,4 +108,5 @@ dotnet build --configuration Release
 cd "$(dirname "$MIGRATION_PROJECT_FILE")"
 dotnet run --project "${MIGRATION_PROJECT_FILE}"
 
+topic "DB Update finished"
 	
