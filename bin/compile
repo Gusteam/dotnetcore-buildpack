@@ -7,9 +7,6 @@ set -o pipefail   # don't ignore exit codes when piping output
 set -o nounset    # fail on unset variables
 unset GIT_DIR     # Avoid GIT_DIR leak from previous build steps
 
-# Set timezone to FR 
-timedatectl set-timezone Europe/Paris
-
 if [ "$STACK" == "cedar-14" ]; then
 	echo "cedar-14 isn't supported"
 	exit 1
