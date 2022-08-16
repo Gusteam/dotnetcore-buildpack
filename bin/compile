@@ -110,3 +110,7 @@ dotnet run --project "${MIGRATION_PROJECT_FILE}"
 
 topic "DB Update finished"
 	
+#topic "Clean image"
+#rm -rf $BUILD_DIR
+
+#topic "Removed build and cache directories"
