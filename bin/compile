@@ -103,14 +103,10 @@ if [ -z ${MIGRATION_PROJECT_FILE:-} ]; then
 	MIGRATION_PROJECT_FILE=$(find ${BUILD_DIR} -maxdepth 5 -iname "GustyCore.FM.csproj" | head -1); 
 fi
 
-#dotnet build -warnaserror
+dotnet build -warnaserror
 dotnet build --configuration Release
 cd "$(dirname "$MIGRATION_PROJECT_FILE")"
 dotnet run --project "${MIGRATION_PROJECT_FILE}"
 
 topic "DB Update finished"
 	
-#topic "Clean image"
-#rm -rf $BUILD_DIR
-
-#topic "Removed build and cache directories"
