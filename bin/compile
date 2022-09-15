@@ -88,7 +88,6 @@ if [ -f ${BUILD_DIR}/Procfile ]; then
 else
 	echo "Add web process to Procfile" | indent
 	cat << EOT >> ${BUILD_DIR}/Procfile
-postdeploy: exit 1
 web: cd \$HOME/scalingo_output && ./${PROJECT_NAME}
 EOT
 fi
